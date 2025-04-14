@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:recommandation_film/data/movie.dart';
-import 'package:recommandation_film/screens/widget_utilise/cardfilm.dart';
-import 'package:recommandation_film/screens/widget_utilise/cardrecommend.dart';
+import 'package:recommandation_film/widget_utilise/bottombar.dart';
+import 'package:recommandation_film/widget_utilise/cardfilm.dart';
+import 'package:recommandation_film/widget_utilise/cardrecommend.dart';
+import 'package:recommandation_film/widget_utilise/genrewifget.dart';
 import 'package:recommandation_film/utile/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // list de recommande  en l prener de fichier dart
   List<MovieModel> recmovielist = List.of(recommandtemovie);
   List<MovieModel> popmovie = List.of(listPopulaireMovie);
+  List<GenreModel> listgenres = List.of(genresList);
   PageController pageController = PageController(
     initialPage: 0,
     viewportFraction: 0.9,
@@ -87,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
+                  //  ******affichage des  film*********
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                     child: Text(
@@ -115,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  //  ******affichage  populaire film*********
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     child: Column(
@@ -124,6 +129,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               "Populaire",
+                              style: TextStyle(
+                                color: Colors.white54,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+InkWell(
+  onTap: () {
+    Navigator.pushNamed(context, '/populaire_films');
+  },
+  child: Text(
+    "Voir plus",
+    style: TextStyle(
+      color: appButtonColor,
+      fontSize: 17,
+      fontWeight: FontWeight.w300,
+    ),
+  ),
+)
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  movielistbulder(popmovie),
+                  //****************genre****************
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Genres",
                               style: TextStyle(
                                 color: Colors.white54,
                                 fontSize: 20,
@@ -143,13 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  //  affichage des film film
-                  movielistbulder(popmovie),
+                  genreBbulider(listgenres),
                 ],
               ),
             ),
           ),
-          // Positioned(child: Container())
+          // bottom bar
+          bottombar(selectedIndex: 0),
         ],
       ),
     );
@@ -189,10 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         itemCount: movieListrec.length,
         itemBuilder: (context, index) {
-          return CardRecommend(
-            imageasset: movieListrec[index].image.toString(),
-            id: movieListrec[index].id.toString(),
-          );
+          return CardRecommend(mv: movieListrec[index]);
         },
         onPageChanged: (int page) {
           setState(() {
@@ -210,9 +248,25 @@ class _HomeScreenState extends State<HomeScreen> {
       height: MediaQuery.of(context).size.height * 0.27,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
         itemCount: movieListpop.length,
         itemBuilder: (context, index) {
           return Cardfilm(movie: movieListpop[index]);
+        },
+      ),
+    );
+  }
+
+  // bulder for genre
+  Widget genreBbulider(List<GenreModel> listgenres) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      height: MediaQuery.of(context).size.height * 0.20,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: listgenres.length,
+        itemBuilder: (context, index) {
+          return genrewidget(genre: listgenres[index]);
         },
       ),
     );

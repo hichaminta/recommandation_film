@@ -1,7 +1,15 @@
+class GenreModel {
+  String? id;
+  String? name;
+  String? image;
+
+  GenreModel({this.id, this.name, this.image});
+}
+
 class MovieModel {
   String? id;
   String? title;
-  List<String>? genres;
+  List<GenreModel>? genres; // Changer le type en une liste de GenreModel
   String? overview;
   String? releaseDate;
   String? voteAverage;
@@ -26,67 +34,34 @@ final recommandtemovie = [
   MovieModel(
     id: "5",
     title: "Dune",
-    genres: ["Adventure", "Drama", "Sci-Fi"],
+    genres: [
+      GenreModel(
+        id: "1",
+        name: "Adventure",
+        image: "assets/images/adventure.png",
+      ),
+      GenreModel(id: "2", name: "Drama", image: "assets/images/drama.png"),
+      GenreModel(id: "3", name: "Sci-Fi", image: "assets/images/scifi.png"),
+    ],
     overview:
-        "A noble family becomes embroiled in a war for control of the galaxy's most valuable resource.",
+        "A noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resourceA noble family becomes embroiled in a war for control of the galaxy's most valuable resource.",
     releaseDate: "2021-10-22",
     voteAverage: "8.3",
     popularity: "400.0",
     posterPath: "assets/images/popular_image_1.jpeg",
     image: "assets/images/popular_image_1.jpeg",
   ),
-  MovieModel(
-    id: "6",
-    title: "Shang-Chi",
-    genres: ["Action", "Adventure", "Fantasy"],
-    overview: "Shang-Chi must confront the past he thought he left behind.",
-    releaseDate: "2021-09-03",
-    voteAverage: "6.9",
-    popularity: "350.0",
-    posterPath: "assets/images/popular_image_2.jpeg",
-    image: "assets/images/popular_image_2.jpeg",
-  ),
-  MovieModel(
-    id: "7",
-    title: "Narcos",
-    genres: ["Crime", "Drama"],
-    overview: "The true story of the rise of the drug trade in Colombia.",
-    releaseDate: "2015-08-28",
-    voteAverage: "9.0",
-    popularity: "500.0",
-    posterPath: "assets/images/popular_image_3.jpeg",
-    image: "assets/images/popular_image_3.jpeg",
-  ),
-  MovieModel(
-    id: "8",
-    title: "Shazam!",
-    genres: ["Action", "Adventure", "Comedy"],
-    overview:
-        "Billy Batson is a teenager who can transform into an adult superhero.",
-    releaseDate: "2019-04-05",
-    voteAverage: "7.5",
-    popularity: "210.0",
-    posterPath: "assets/images/for_your_image_2.jpeg",
-    image: "assets/images/for_your_image_2.jpeg",
-  ),
-  MovieModel(
-    id: "9",
-    title: "Stranger Things",
-    genres: ["Drama", "Fantasy", "Horror"],
-    overview: "The kids face supernatural forces that threaten their town.",
-    releaseDate: "2016-07-15",
-    voteAverage: "9.2",
-    popularity: "320.0",
-    posterPath: "assets/images/for_your_image_3.jpeg",
-    image: "assets/images/for_your_image_3.jpeg",
-  ),
+  
 ];
 
 final listPopulaireMovie = [
   MovieModel(
     id: "10",
     title: "Alien",
-    genres: ["Horror", "Sci-Fi"],
+    genres: [
+      GenreModel(id: "15", name: "Horror", image: "assets/images/horror.png"),
+      GenreModel(id: "3", name: "Sci-Fi", image: "assets/images/scifi.png"),
+    ],
     overview:
         "The crew of a commercial spacecraft encounter a deadly alien species.",
     releaseDate: "1979-05-25",
@@ -98,7 +73,11 @@ final listPopulaireMovie = [
   MovieModel(
     id: "11",
     title: "300",
-    genres: ["Action", "Drama", "War"],
+    genres: [
+      GenreModel(id: "9", name: "Action", image: "assets/images/action.png"),
+      GenreModel(id: "16", name: "Drama", image: "assets/images/drama.png"),
+      GenreModel(id: "17", name: "War", image: "assets/images/war.png"),
+    ],
     overview:
         "A small group of Spartan warriors fight against the Persian empire.",
     releaseDate: "2006-03-09",
@@ -107,11 +86,75 @@ final listPopulaireMovie = [
     posterPath: "assets/images/legendary_movie_2.jpeg",
     image: "assets/images/legendary_movie_2.jpeg",
   ),
+  // Ajoutez les autres films de la liste de manière similaire
+];
+
+final genresList = [
+  GenreModel(id: "15", name: "Horror", image: "assets/images/genres_1.png"),
+  GenreModel(id: "16", name: "Fantasy", image: "assets/images/genres_2.jpeg"),
+  GenreModel(id: "17", name: "History", image: "assets/images/genres_3.jpeg"),
+  GenreModel(id: "18", name: "Detective", image: "assets/images/genres_4.jpeg"),
+  GenreModel(id: "19", name: "Action", image: "assets/images/genres_5.jpeg"),
+];
+final listoutfilms = [
   MovieModel(
-    id: "12",
+    id: "10",
+    title: "Alien",
+    genres: [
+      GenreModel(id: "15", name: "Horror", image: "assets/images/horror.png"),
+      GenreModel(id: "3", name: "Sci-Fi", image: "assets/images/scifi.png"),
+    ],
+    overview:
+        "The crew of a commercial spacecraft encounter a deadly alien species.",
+    releaseDate: "1979-05-25",
+    voteAverage: "8.4",
+    popularity: "150.0",
+    posterPath: "assets/images/legendary_movie_1.jpeg",
+    image: "assets/images/legendary_movie_1.jpeg",
+  ),
+  MovieModel(
+    id: "11",
+    title: "300",
+    genres: [
+      GenreModel(id: "9", name: "Action", image: "assets/images/action.png"),
+      GenreModel(id: "16", name: "Drama", image: "assets/images/drama.png"),
+      GenreModel(id: "17", name: "War", image: "assets/images/war.png"),
+    ],
+    overview:
+        "A small group of Spartan warriors fight against the Persian empire.",
+    releaseDate: "2006-03-09",
+    voteAverage: "7.6",
+    popularity: "450.0",
+    posterPath: "assets/images/legendary_movie_2.jpeg",
+    image: "assets/images/legendary_movie_2.jpeg",
+  ),
+MovieModel(
+    id: "6",
+    title: "Shang-Chi",
+    genres: [
+      GenreModel(id: "4", name: "Action", image: "assets/images/action.png"),
+      GenreModel(
+        id: "5",
+        name: "Adventure",
+        image: "assets/images/adventure.png",
+      ),
+      GenreModel(id: "6", name: "Fantasy", image: "assets/images/fantasy.png"),
+    ],
+    overview: "Shang-Chi must confront the past he thought he left behind.",
+    releaseDate: "2021-09-03",
+    voteAverage: "6.9",
+    popularity: "350.0",
+    posterPath: "assets/images/popular_image_2.jpeg",
+    image: "assets/images/popular_image_2.jpeg",
+  ),
+  MovieModel(
+    id: "7",
     title: "Narcos",
-    genres: ["Crime", "Drama"],
-    overview: "The rise and fall of the Colombian drug lord, Pablo Escobar.",
+    genres: [
+      GenreModel(id: "7", name: "Crime", image: "assets/images/crime.png"),
+      GenreModel(id: "8", name: "Drama", image: "assets/images/drama.png"),
+    ],
+    overview: "The true story of the rise of the drug trade in Colombia.",
     releaseDate: "2015-08-28",
     voteAverage: "9.0",
     popularity: "500.0",
@@ -119,10 +162,19 @@ final listPopulaireMovie = [
     image: "assets/images/popular_image_3.jpeg",
   ),
   MovieModel(
-    id: "13",
+    id: "8",
     title: "Shazam!",
-    genres: ["Action", "Adventure", "Comedy"],
-    overview: "A boy receives the power to transform into an adult superhero.",
+    genres: [
+      GenreModel(id: "9", name: "Action", image: "assets/images/action.png"),
+      GenreModel(
+        id: "10",
+        name: "Adventure",
+        image: "assets/images/adventure.png",
+      ),
+      GenreModel(id: "11", name: "Comedy", image: "assets/images/comedy.png"),
+    ],
+    overview:
+        "Billy Batson is a teenager who can transform into an adult superhero.",
     releaseDate: "2019-04-05",
     voteAverage: "7.5",
     popularity: "210.0",
@@ -130,73 +182,18 @@ final listPopulaireMovie = [
     image: "assets/images/for_your_image_2.jpeg",
   ),
   MovieModel(
-    id: "14",
-    title: "Cruella",
-    genres: ["Crime", "Drama", "Comedy"],
-    overview:
-        "The origin story of the infamous Disney villain, Cruella de Vil.",
-    releaseDate: "2021-05-28",
-    voteAverage: "8.5",
-    popularity: "123.0",
-    posterPath: "assets/images/for_your_image_1.jpeg",
-    image: "assets/images/for_your_image_1.jpeg",
-  ),
-];
-
-final genresList = [
-  MovieModel(
-    id: "15",
-    title: "Horror",
-    genres: ["Horror"],
-    overview: "Scary movies that will keep you on the edge of your seat.",
-    releaseDate: "Genre",
-    voteAverage: "N/A",
-    popularity: "N/A",
-    posterPath: "assets/images/genres_1.png",
-    image: "assets/images/genres_1.png",
-  ),
-  MovieModel(
-    id: "16",
-    title: "Fantasy",
-    genres: ["Fantasy"],
-    overview: "Movies filled with magical and mythical creatures.",
-    releaseDate: "Genre",
-    voteAverage: "N/A",
-    popularity: "N/A",
-    posterPath: "assets/images/genres_2.jpeg",
-    image: "assets/images/genres_2.jpeg",
-  ),
-  MovieModel(
-    id: "17",
-    title: "History",
-    genres: ["History"],
-    overview: "Movies that portray important historical events.",
-    releaseDate: "Genre",
-    voteAverage: "N/A",
-    popularity: "N/A",
-    posterPath: "assets/images/genres_3.jpeg",
-    image: "assets/images/genres_3.jpeg",
-  ),
-  MovieModel(
-    id: "18",
-    title: "Detective",
-    genres: ["Detective"],
-    overview: "Movies focused on solving mysteries and crimes.",
-    releaseDate: "Genre",
-    voteAverage: "N/A",
-    popularity: "N/A",
-    posterPath: "assets/images/genres_4.jpeg",
-    image: "assets/images/genres_4.jpeg",
-  ),
-  MovieModel(
-    id: "19",
-    title: "Action",
-    genres: ["Action"],
-    overview: "Movies filled with intense action sequences.",
-    releaseDate: "Genre",
-    voteAverage: "N/A",
-    popularity: "N/A",
-    posterPath: "assets/images/genres_5.jpeg",
-    image: "assets/images/genres_5.jpeg",
+    id: "9",
+    title: "Stranger Things",
+    genres: [
+      GenreModel(id: "12", name: "Drama", image: "assets/images/drama.png"),
+      GenreModel(id: "13", name: "Fantasy", image: "assets/images/fantasy.png"),
+      GenreModel(id: "14", name: "Horror", image: "assets/images/horror.png"),
+    ],
+    overview: "The kids face supernatural forces that threaten their town.",
+    releaseDate: "2016-07-15",
+    voteAverage: "9.2",
+    popularity: "320.0",
+    posterPath: "assets/images/for_your_image_3.jpeg",
+    image: "assets/images/for_your_image_3.jpeg",
   ),
 ];
