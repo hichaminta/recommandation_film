@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/widget_utilise/bottombar.dart';
 import 'package:recommandation_film/widget_utilise/cardfilm.dart';
 import 'package:recommandation_film/widget_utilise/cardrecommend.dart';
-import 'package:recommandation_film/widget_utilise/genrewifget.dart';
 import 'package:recommandation_film/utile/colors.dart';
+import 'package:recommandation_film/widget_utilise/genrewifget.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -14,16 +13,46 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // list de recommande  en l prener de fichier dart
-  List<MovieModel> recmovielist = List.of(recommandtemovie);
-  List<MovieModel> popmovie = List.of(listPopulaireMovie);
-  List<GenreModel> listgenres = List.of(genresList);
+  List<MovieModel> recmovielist = [];
+  List<MovieModel> popmovie = [];
+  List<GenreModel> listgenres = [];
   PageController pageController = PageController(
     initialPage: 0,
     viewportFraction: 0.9,
   );
 
   int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMovies();
+    fetchGenresList();
+  }
+
+  Future<void> fetchMovies() async {
+    try {
+      List<MovieModel> movies = await fetchPopularMovies();
+      setState(() {
+        popmovie = movies;
+        recmovielist = movies; // On peut aussi récupérer une liste de films recommandés ici
+      });
+    } catch (e) {
+      print("Erreur lors de la récupération des films populaires : $e");
+    }
+  }
+
+  Future<void> fetchGenresList() async {
+    try {
+      List<GenreModel> genres = await fetchGenres();
+      setState(() {
+        listgenres = genres;
+      });
+    } catch (e) {
+      print("Erreur lors de la récupération des genres : $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,19 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
               scrollDirection: Axis.vertical,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     child: Row(
-                      // space enntre les element
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Hicham",
                           style: TextStyle(color: Colors.white, fontSize: 30),
                         ),
-
                         Container(
                           height: 50,
                           width: 50,
@@ -65,9 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  // *** fin de  nav ***
                   SizedBox(height: 20),
-                  // *** serach bar ***
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30),
                     child: Container(
@@ -90,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  //  ******affichage des  film*********
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                     child: Text(
@@ -119,7 +142,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  //  ******affichage  populaire film*********
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     child: Column(
@@ -135,27 +157,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
-InkWell(
-  onTap: () {
-    Navigator.pushNamed(context, '/populaire_films');
-  },
-  child: Text(
-    "Voir plus",
-    style: TextStyle(
-      color: appButtonColor,
-      fontSize: 17,
-      fontWeight: FontWeight.w300,
-    ),
-  ),
-)
-
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/populaire_films',
+                                );
+                              },
+                              child: Text(
+                                "Voir plus",
+                                style: TextStyle(
+                                  color: appButtonColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
                   movielistbulder(popmovie),
-                  //****************genre****************
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     child: Column(
@@ -171,12 +194,20 @@ InkWell(
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
-                            Text(
-                              "Voir plus",
-                              style: TextStyle(
-                                color: appButtonColor,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w300,
+                             InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/genres',
+                                );
+                              },
+                              child: Text(
+                                "Voir plus",
+                                style: TextStyle(
+                                  color: appButtonColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w300,
+                                ),
                               ),
                             ),
                           ],
@@ -189,7 +220,6 @@ InkWell(
               ),
             ),
           ),
-          // bottom bar
           bottombar(selectedIndex: 0),
         ],
       ),
@@ -198,7 +228,7 @@ InkWell(
 
   List<Widget> buildPageIndicatorWidget() {
     List<Widget> list = [];
-    for (int i = 0; i < recmovielist.length; i++) {
+    for (int i = 0; i < recmovielist.take(5).length; i++) {
       list.add(i == currentPage ? _indicator(true) : _indicator(false));
     }
     return list;
@@ -211,24 +241,19 @@ InkWell(
       height: 8.0,
       width: 8.0,
       decoration: BoxDecoration(
-        color:
-            isActive
-                ? Colors.blue
-                : Colors.grey, // Changer la couleur selon l'état
-        borderRadius: BorderRadius.circular(20), // Pour faire un cercle
+        color: isActive ? Colors.blue : Colors.grey,
+        borderRadius: BorderRadius.circular(20),
       ),
     );
   }
 
-  // for  you cards layout widget
   Widget foryoucarsLayout(List<MovieModel> movieListrec) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.47,
       child: PageView.builder(
         physics: ClampingScrollPhysics(),
         controller: pageController,
-
-        itemCount: movieListrec.length,
+        itemCount: movieListrec.take(5).length,
         itemBuilder: (context, index) {
           return CardRecommend(mv: movieListrec[index]);
         },
@@ -241,7 +266,6 @@ InkWell(
     );
   }
 
-  // for  you cards populairelayout widget
   Widget movielistbulder(List<MovieModel> movieListpop) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 29, vertical: 10),
@@ -249,7 +273,7 @@ InkWell(
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: movieListpop.length,
+        itemCount: movieListpop.take(5).length,
         itemBuilder: (context, index) {
           return Cardfilm(movie: movieListpop[index]);
         },
@@ -257,16 +281,15 @@ InkWell(
     );
   }
 
-  // bulder for genre
-  Widget genreBbulider(List<GenreModel> listgenres) {
+  Widget genreBbulider(List<GenreModel> genreList) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-      height: MediaQuery.of(context).size.height * 0.20,
+      margin: EdgeInsets.symmetric(horizontal: 29, vertical: 10),
+      height: 160,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: listgenres.length,
+        itemCount: genreList.take(5).length,
         itemBuilder: (context, index) {
-          return genrewidget(genre: listgenres[index]);
+          return GenreWidget(genre: genreList[index]);
         },
       ),
     );

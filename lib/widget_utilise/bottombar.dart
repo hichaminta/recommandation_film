@@ -4,21 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recommandation_film/utile/colors.dart';
 
-
 List<Map<String, dynamic>> navabottomitems = [
-  {
-    'icon': FontAwesomeIcons.house,
-    'route': '/home',
-  },
-  {
-    'icon': FontAwesomeIcons.film,
-    'route': '/films',
-  },
-  {
-    'icon': FontAwesomeIcons.solidHeart,
-    'route': '/home',
-  },
-
+  {'icon': FontAwesomeIcons.house, 'route': '/home'},
+  {'icon': FontAwesomeIcons.film, 'route': '/films'},
+  {'icon': FontAwesomeIcons.solidHeart, 'route': '/home'},
 ];
 
 class bottombar extends StatelessWidget {
@@ -39,7 +28,7 @@ class bottombar extends StatelessWidget {
           child: Container(
             color: appSearchbarColor.withOpacity(0.6),
             width: MediaQuery.of(context).size.width,
-            height: 80,
+            height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -51,10 +40,11 @@ class bottombar extends StatelessWidget {
                     },
                     child: Icon(
                       item['icon'],
-                      color: item == navabottomitems[selectedIndex]
-                          ? Colors.white
-                          : Colors.white54,
-                      size: 25,
+                      color:
+                          item == navabottomitems[selectedIndex]
+                              ? Colors.white
+                              : Colors.white54,
+                      size: 20,
                     ),
                   ),
                 ),

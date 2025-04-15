@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/screens/totufilms.dart';
 
-class FilmsParGenrePage extends StatelessWidget {
+class FilmsParGenrePage extends StatefulWidget {
   final GenreModel genre;
 
   FilmsParGenrePage({super.key, required this.genre});
 
   @override
-  Widget build(BuildContext context) {
-    // Filtrer les films par genre
-    List<MovieModel> filmsFiltres = listoutfilms.where((film) {
-      // Vérifier si le genre est dans la liste des genres du film
-      return film.genres?.any((g) => g.name == genre.name) ?? false;
-    }).toList();
+  _FilmsParGenrePageState createState() => _FilmsParGenrePageState();
+}
 
-    // Afficher la liste des films filtrés dans Toutfilm
-    return Toutfilm(Listesfilmes: filmsFiltres);
+class _FilmsParGenrePageState extends State<FilmsParGenrePage> {
+  late Future<List<MovieModel>> _films;
+
+  @override
+  void initState() {
+    super.initState();
+    // Récupérer les films du genre sélectionné
+    _films = fetchMoviesByGenre(widget.genre.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.genre.name),
+      ),
+      body: FutureBuilder<List<MovieModel>>(
+        future: _films,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erreur : ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('Aucun film trouvé pour ce genre.'));
+          } else {
+            List<MovieModel> films = snapshot.data!;
+            return Toutfilm(Listesfilmes: films); // Affichage des films filtrés
+          }
+        },
+      ),
+    );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/widget_utilise/bottombar.dart';
 import 'package:recommandation_film/widget_utilise/cardfilm.dart';
 import 'package:recommandation_film/utile/colors.dart';

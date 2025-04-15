@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/utile/colors.dart';
 
 class CardRecommend extends StatelessWidget {
@@ -24,7 +24,7 @@ class CardRecommend extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-            image: AssetImage(mv.image.toString()),
+            image: NetworkImage(mv.image.toString()),
             fit: BoxFit.cover,
           ),
         ),

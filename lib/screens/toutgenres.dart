@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/widget_utilise/bottombar.dart';
 import 'package:recommandation_film/widget_utilise/genrewifget.dart';
 import 'package:recommandation_film/utile/colors.dart';
@@ -47,11 +47,11 @@ class _toutgenresState extends State<toutgenres> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => genrewidget(genre: genre),
+                          builder: (_) => GenreWidget(genre: genre),
                         ),
                       );
                     },
-                    child: genrewidget(genre: genre),
+                    child: GenreWidget(genre: genre),
                   );
                 },
               ),

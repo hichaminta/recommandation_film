@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:readmore/readmore.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/utile/colors.dart';
 
 class detaillefilm extends StatelessWidget {
@@ -34,7 +34,7 @@ class detaillefilm extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.50,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(movieModel.image.toString()),
+                      image: NetworkImage(movieModel.image.toString()),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -105,19 +105,19 @@ class detaillefilm extends StatelessWidget {
                           vertical: 10,
                           horizontal: 10,
                         ),
-                        child: ReadMoreText(movieModel.overview.toString(),
-                        trimLines: 3,
-                        trimMode: TrimMode.Line,
-                        moreStyle: TextStyle(color: appButtonColor),
-                        lessStyle: TextStyle(color: appButtonColor),
-                        style: TextStyle(
-                          color: Colors.white70,
-                          height: 1.5,
-                          fontWeight: FontWeight.w500
-                        ),
+                        child: ReadMoreText(
+                          movieModel.overview.toString(),
+                          trimLines: 3,
+                          trimMode: TrimMode.Line,
+                          moreStyle: TextStyle(color: appButtonColor),
+                          lessStyle: TextStyle(color: appButtonColor),
+                          style: TextStyle(
+                            color: Colors.white70,
+                            height: 1.5,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -126,7 +126,6 @@ class detaillefilm extends StatelessWidget {
           ),
         ],
       ),
-      
     );
   }
 

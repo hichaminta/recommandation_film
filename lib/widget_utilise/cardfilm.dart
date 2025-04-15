@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 
 class Cardfilm extends StatefulWidget {
   final MovieModel movie;
@@ -30,7 +30,7 @@ class _CardfilmState extends State<Cardfilm> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
               image: DecorationImage(
-                image: AssetImage(widget.movie.image!),
+                image: NetworkImage(widget.movie.image),
                 fit: BoxFit.cover,
               ),
             ),

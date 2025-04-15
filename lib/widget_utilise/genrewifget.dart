@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:recommandation_film/data/movie.dart';
+import 'package:recommandation_film/data/model.dart';
 import 'package:recommandation_film/screens/film_par_genre.dart';
 
-class genrewidget extends StatelessWidget {
+class GenreWidget extends StatelessWidget {
   final GenreModel genre;
 
-  genrewidget({super.key, required this.genre});
+  GenreWidget({super.key, required this.genre});
 
   @override
   Widget build(BuildContext context) {
+    print(genre.image);
     return InkWell(
       onTap: () {
         // Lorsqu'un genre est cliqué, on passe à la page des films par genre
@@ -26,7 +27,7 @@ class genrewidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: AssetImage(genre.image.toString()),
+                image: AssetImage(genre.image ),  // Utiliser une image par défaut si image est nulle
                 fit: BoxFit.cover,
               ),
             ),
@@ -34,15 +35,15 @@ class genrewidget extends StatelessWidget {
           ),
           Positioned(
             child: Text(
-              genre.name.toString(),
+              genre.name,
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            bottom: 0,
-            left: 20,
+            top:0 ,
+            left: 10,
           ),
         ],
       ),
