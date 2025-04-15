@@ -7,7 +7,7 @@ import 'package:recommandation_film/utile/colors.dart';
 List<Map<String, dynamic>> navabottomitems = [
   {'icon': FontAwesomeIcons.house, 'route': '/home'},
   {'icon': FontAwesomeIcons.film, 'route': '/films'},
-  {'icon': FontAwesomeIcons.solidHeart, 'route': '/home'},
+  {'icon': FontAwesomeIcons.solidHeart, 'route': '/filmsfavorise'},
 ];
 
 class bottombar extends StatelessWidget {
@@ -32,7 +32,6 @@ class bottombar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Utilisation de 'onTap' pour naviguer vers la route
                 ...navabottomitems.map(
                   (item) => GestureDetector(
                     onTap: () {

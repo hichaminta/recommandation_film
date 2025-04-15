@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     fetchMovies();
     fetchGenresList();
+    fetchRecommendedMovies(); // Récupérer les films recommandés ici
   }
 
   Future<void> fetchMovies() async {
@@ -35,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
       List<MovieModel> movies = await fetchPopularMovies();
       setState(() {
         popmovie = movies;
-        recmovielist = movies; // On peut aussi récupérer une liste de films recommandés ici
       });
     } catch (e) {
       print("Erreur lors de la récupération des films populaires : $e");
@@ -50,6 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       print("Erreur lors de la récupération des genres : $e");
+    }
+  }
+
+  // Fonction pour récupérer les films recommandés
+  Future<void> fetchRecommendedMovies() async {
+    try {
+      List<MovieModel> recommendedMovies = await fetchRecommendationsFromLikedMovies();
+      print("Films recommandés récupérés : ${recommendedMovies.length} films");  // Vérification
+      setState(() {
+        recmovielist = recommendedMovies;
+      });
+    } catch (e) {
+      print("Erreur lors de la récupération des films recommandés : $e");
     }
   }
 
@@ -115,17 +128,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    child: Text(
-                      "Pour Vous",
-                      style: TextStyle(
-                        color: Colors.white54,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                      ),
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Pour Vous",
+                              style: TextStyle(
+                                color: Colors.white54,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/filmsrecommandes',
+                                );
+                              },
+                              child: Text(
+                                "Voir plus",
+                                style: TextStyle(
+                                  color: appButtonColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  foryoucarsLayout(recmovielist),
+                  foryoucarsLayout(recmovielist), // Afficher les films recommandés ici
                   Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -248,6 +286,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget foryoucarsLayout(List<MovieModel> movieListrec) {
+    if (movieListrec.isEmpty) {
+      return Center(child: CircularProgressIndicator());  // Affiche un indicateur de chargement si la liste est vide
+    }
+    
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.47,
       child: PageView.builder(

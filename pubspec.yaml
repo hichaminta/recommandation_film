@@ -38,6 +38,9 @@ dependencies:
   readmore: ^3.0.0
   http: ^1.3.0
   flutter_dotenv: ^5.0.2
+  shared_preferences: ^2.5.3
+  flutter_launcher_icons: ^0.13.1
+   
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -92,3 +96,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"

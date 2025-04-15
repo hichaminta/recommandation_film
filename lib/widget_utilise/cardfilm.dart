@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recommandation_film/data/model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cardfilm extends StatefulWidget {
   final MovieModel movie;
@@ -13,6 +14,59 @@ class Cardfilm extends StatefulWidget {
 
 class _CardfilmState extends State<Cardfilm> {
   bool isLiked = false;
+  
+  @override
+  void initState() {
+    super.initState();
+    // Check if movie is liked when the widget initializes
+    _checkIfLiked();
+  }
+  
+  // Check if movie is liked using SharedPreferences
+  Future<void> _checkIfLiked() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Get the list of liked movie IDs (or empty list if none)
+    final likedMovies = prefs.getStringList('likedMovies') ?? [];
+    
+    setState(() {
+      isLiked = likedMovies.contains(widget.movie.id);
+    });
+  }
+  
+  // Update liked status in SharedPreferences
+  Future<void> _toggleLikeStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Get current list of liked movies
+    final likedMovies = prefs.getStringList('likedMovies') ?? [];
+    
+    setState(() {
+      if (isLiked) {
+        // Remove from liked movies
+        likedMovies.remove(widget.movie.id);
+      } else {
+        // Add to liked movies
+        likedMovies.add(widget.movie.id);
+      }
+      // Update local state
+      isLiked = !isLiked;
+    });
+    
+    // Save updated list back to SharedPreferences
+    await prefs.setStringList('likedMovies', likedMovies);
+    
+    // Show feedback to user
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          isLiked ? 'Film liked!' : 'Film unliked!',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: isLiked ? Colors.green : Colors.grey,
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,32 +90,17 @@ class _CardfilmState extends State<Cardfilm> {
             ),
           ),
 
-          // aimer l'image
+          // Bouton like avec coeur
           Positioned(
             top: 10,
             right: 10,
             child: IconButton(
               icon: Icon(
-                FontAwesomeIcons.heart,
+                isLiked ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
                 color: isLiked ? Colors.red : Colors.white,
                 size: 24,
               ),
-              onPressed: () {
-                setState(() {
-                  isLiked = !isLiked;
-                });
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      isLiked ? 'Film liked!' : 'Film unliked!',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: isLiked ? Colors.green : Colors.grey,
-                    duration: Duration(seconds: 1),
-                  ),
-                );
-              },
+              onPressed: _toggleLikeStatus,
             ),
           ),
 
