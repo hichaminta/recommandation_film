@@ -35,6 +35,7 @@ class _ToutfilmState extends State<Toutfilm> {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+
               child: GridView.builder(
                 itemCount:
                     widget

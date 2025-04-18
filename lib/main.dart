@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Film Recommendation",
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(), 
+      home: HomeScreen(),
       routes: {
         '/home': (context) => HomeScreen(),
         '/films': (context) => FilmLoader(),
@@ -41,8 +41,15 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialPageRoute(
-          builder: (context) =>
-              Scaffold(body: Center(child: Text(style:TextStyle(color: appButtonColor), "Route not found"))),
+          builder:
+              (context) => Scaffold(
+                body: Center(
+                  child: Text(
+                    style: TextStyle(color: appButtonColor),
+                    "Route not found",
+                  ),
+                ),
+              ),
         );
       },
     );
@@ -63,12 +70,28 @@ class GenreLoader extends StatelessWidget {
           return myLoader();
         }
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
         if (snapshot.hasData) {
           return HomeScreen();
         }
-        return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Aucun genre trouvé')));
+        return Scaffold(
+          backgroundColor: appBackgroundColor,
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun genre trouvé',
+            ),
+          ),
+        );
       },
     );
   }
@@ -86,12 +109,28 @@ class GenrePageLoader extends StatelessWidget {
           return myLoader();
         }
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
         if (snapshot.hasData) {
           return toutgenres(genreslists: snapshot.data!);
         }
-        return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Aucun genre trouvé')));
+        return Scaffold(
+          backgroundColor: appBackgroundColor,
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun genre trouvé',
+            ),
+          ),
+        );
       },
     );
   }
@@ -109,12 +148,27 @@ class FilmLoader extends StatelessWidget {
           return myLoader();
         }
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
         if (snapshot.hasData) {
           return Toutfilm(Listesfilmes: snapshot.data!);
         }
-        return Scaffold(body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Aucun film trouvé')));
+        return Scaffold(
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun film trouvé',
+            ),
+          ),
+        );
       },
     );
   }
@@ -132,14 +186,34 @@ class PopularFilmLoader extends StatelessWidget {
           return myLoader();
         }
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
         if (snapshot.hasData) {
           return populaires(Listesfilmespopuplaire: snapshot.data!);
         }
         return Scaffold(
-          appBar: AppBar(backgroundColor: appSearchbarColor,title: Text(style:TextStyle(color: appButtonColor), "Films populaire")),
-          body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Aucun film populaire trouvé')));
+          appBar: AppBar(
+            backgroundColor: appSearchbarColor,
+            title: Text(
+              style: TextStyle(color: appButtonColor),
+              "Films populaire",
+            ),
+          ),
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun film populaire trouvé',
+            ),
+          ),
+        );
       },
     );
   }
@@ -160,7 +234,15 @@ class FilmFavorisLoader extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
 
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -168,9 +250,20 @@ class FilmFavorisLoader extends StatelessWidget {
         }
 
         return Scaffold(
-          appBar: AppBar(backgroundColor: appSearchbarColor,title: Text(style:TextStyle(color: appButtonColor), "Films Favoris")),
+          appBar: AppBar(
+            backgroundColor: appSearchbarColor,
+            title: Text(
+              style: TextStyle(color: appButtonColor),
+              "Films Favoris",
+            ),
+          ),
           backgroundColor: appBackgroundColor,
-          body: Center( child: Text(style:TextStyle(color: appButtonColor), 'Aucun film favori pour le moment')),
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun film favori pour le moment',
+            ),
+          ),
         );
       },
     );
@@ -178,15 +271,14 @@ class FilmFavorisLoader extends StatelessWidget {
 }
 
 class myLoader extends StatelessWidget {
-  const myLoader({
-    super.key,
-  });
+  const myLoader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       backgroundColor: appBackgroundColor,
-      body: Center(child: CircularProgressIndicator()));
+      body: Center(child: CircularProgressIndicator()),
+    );
   }
 }
 
@@ -203,17 +295,36 @@ class FilmRecloaderall extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          return Scaffold(backgroundColor: appBackgroundColor, body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Erreur : ${snapshot.error}')));
+          return Scaffold(
+            backgroundColor: appBackgroundColor,
+            body: Center(
+              child: Text(
+                style: TextStyle(color: appButtonColor),
+                'Erreur : ${snapshot.error}',
+              ),
+            ),
+          );
         }
 
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          return  filmrecommande(filmrecmoandes: snapshot.data!);
+          return filmrecommande(filmrecmoandes: snapshot.data!);
         }
 
         return Scaffold(
-        appBar: AppBar(backgroundColor: appSearchbarColor,title: Text(style:TextStyle(color: appButtonColor), "Films Recommande")),
+          appBar: AppBar(
+            backgroundColor: appSearchbarColor,
+            title: Text(
+              style: TextStyle(color: appButtonColor),
+              "Films Recommande",
+            ),
+          ),
           backgroundColor: appBackgroundColor,
-          body: Center(child: Text(style:TextStyle(color: appButtonColor), 'Aucun film recommande  pour le moment')),
+          body: Center(
+            child: Text(
+              style: TextStyle(color: appButtonColor),
+              'Aucun film recommande  pour le moment',
+            ),
+          ),
         );
       },
     );

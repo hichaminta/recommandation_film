@@ -41,9 +41,11 @@ class bottombar extends StatelessWidget {
                       item['icon'],
                       color:
                           item == navabottomitems[selectedIndex]
-                              ? Colors.white
+                              ? Colors.white 
                               : Colors.white54,
-                      size: 20,
+                      size: item == navabottomitems[selectedIndex]
+                              ? 24
+                              : 20,
                     ),
                   ),
                 ),

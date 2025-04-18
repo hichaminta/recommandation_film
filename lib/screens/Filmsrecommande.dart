@@ -24,10 +24,7 @@ class _filmrecommandeState extends State<filmrecommande> {
       appBar: AppBar(
         backgroundColor: appBackgroundColor,
         elevation: 0,
-        title: const Text(
-          "Pour Vous",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text("Pour Vous", style: TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Stack(
@@ -54,7 +51,7 @@ class _filmrecommandeState extends State<filmrecommande> {
               ),
             ),
           ),
-          bottombar(selectedIndex: 1),
+          bottombar(selectedIndex: 2),
         ],
       ),
     );

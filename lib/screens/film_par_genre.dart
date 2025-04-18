@@ -24,9 +24,7 @@ class _FilmsParGenrePageState extends State<FilmsParGenrePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.genre.name),
-      ),
+      appBar: AppBar(title: Text(widget.genre.name)),
       body: FutureBuilder<List<MovieModel>>(
         future: _films,
         builder: (context, snapshot) {

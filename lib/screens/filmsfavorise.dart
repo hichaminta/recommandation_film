@@ -25,7 +25,7 @@ class _filmfavoriseState extends State<filmfavorise> {
         backgroundColor: appBackgroundColor,
         elevation: 0,
         title: const Text(
-          "Tous les Films",
+          "Films favoris",
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
@@ -54,7 +54,7 @@ class _filmfavoriseState extends State<filmfavorise> {
               ),
             ),
           ),
-          bottombar(selectedIndex: 1),
+          bottombar(selectedIndex: 2),
         ],
       ),
     );

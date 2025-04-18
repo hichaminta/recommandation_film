@@ -48,48 +48,60 @@ class detaillefilm extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                movieModel.title.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w600,
+                          // Partie gauche : titre et date
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  movieModel.title.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                movieModel.releaseDate.toString(),
-                                style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                                SizedBox(height: 10),
+                                Text(
+                                  movieModel.releaseDate.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white54,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Row(
+
+                          SizedBox(width: 10), // un petit espace
+                          Column(
                             children: [
-                              Text(
-                                movieModel.voteAverage.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Icon(
-                                FontAwesomeIcons.solidStar,
-                                size: 15,
-                                color: Colors.yellow,
+                              Row(
+                                children: [
+                                  Text(
+                                    movieModel.voteAverage.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Icon(
+                                    FontAwesomeIcons.solidStar,
+                                    size: 15,
+                                    color: Colors.yellow,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ],
                       ),
+
                       // les GENRES de film
                       Wrap(
                         spacing: 8.0, // Espace horizontal entre les tags

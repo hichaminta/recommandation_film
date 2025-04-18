@@ -56,8 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
   // Fonction pour récupérer les films recommandés
   Future<void> fetchRecommendedMovies() async {
     try {
-      List<MovieModel> recommendedMovies = await fetchRecommendationsFromLikedMovies();
-      print("Films recommandés récupérés : ${recommendedMovies.length} films");  // Vérification
+      List<MovieModel> recommendedMovies =
+          await fetchRecommendationsFromLikedMovies();
+      print(
+        "Films recommandés récupérés : ${recommendedMovies.length} films",
+      ); // Vérification
       setState(() {
         recmovielist = recommendedMovies;
       });
@@ -85,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Hicham",
+                          "User",
                           style: TextStyle(color: Colors.white, fontSize: 30),
                         ),
                         Container(
@@ -95,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(50),
                             image: DecorationImage(
                               image: NetworkImage(
-                                "https://media.licdn.com/dms/image/v2/D5603AQH8g9PHFejnlw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1701385862141?e=1750291200&v=beta&t=d5SE_qVo1SGwjWqwpg5wqcjgZqz6kKN2xP1y-d-0N0w",
+                                "https://img.freepik.com/psd-gratuit/illustration-icone-contact-isolee_23-2151903337.jpg?t=st=1745014883~exp=1745018483~hmac=f658f856001c4b6da26c67ceb37f4f11d71f98221bcdd56a9f98b067a96e3998&w=900",
                               ),
                               fit: BoxFit.cover,
                             ),
@@ -105,28 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: appSearchbarColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Recherche ...',
-                          hintStyle: TextStyle(color: Colors.grey[600]),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey[600],
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
+
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     child: Column(
@@ -163,7 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  foryoucarsLayout(recmovielist), // Afficher les films recommandés ici
+                  SizedBox(height: 20),
+
+                  foryoucarsLayout(
+                    recmovielist,
+                  ), // Afficher les films recommandés ici
                   Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -180,6 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                     child: Column(
@@ -232,12 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
-                             InkWell(
+                            InkWell(
                               onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/genres',
-                                );
+                                Navigator.pushNamed(context, '/genres');
                               },
                               child: Text(
                                 "Voir plus",
@@ -287,9 +272,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget foryoucarsLayout(List<MovieModel> movieListrec) {
     if (movieListrec.isEmpty) {
-      return Center(child: CircularProgressIndicator());  // Affiche un indicateur de chargement si la liste est vide
+      return Center(
+        child: CircularProgressIndicator(),
+      ); // Affiche un indicateur de chargement si la liste est vide
     }
-    
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.47,
       child: PageView.builder(

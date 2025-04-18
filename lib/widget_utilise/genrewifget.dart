@@ -16,7 +16,10 @@ class GenreWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => FilmsParGenrePage(genre: genre),  // Passe le genre sélectionné à la nouvelle page
+            builder:
+                (_) => FilmsParGenrePage(
+                  genre: genre,
+                ), // Passe le genre sélectionné à la nouvelle page
           ),
         );
       },
@@ -27,7 +30,9 @@ class GenreWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: AssetImage(genre.image ),  // Utiliser une image par défaut si image est nulle
+                image: AssetImage(
+                  genre.image,
+                ), // Utiliser une image par défaut si image est nulle
                 fit: BoxFit.cover,
               ),
             ),
@@ -42,7 +47,7 @@ class GenreWidget extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            top:0 ,
+            top: 0,
             left: 10,
           ),
         ],
