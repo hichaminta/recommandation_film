@@ -81,7 +81,7 @@ Future<List<GenreModel>> fetchGenres() async {
     Uri.parse('$baseUrl/genre/movie/list?language=en-US'),
     headers: {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns',
+          'Bearer Votre_API_code',
       'Accept': 'application/json',
     },
   );
@@ -103,7 +103,7 @@ Future<List<MovieModel>> fetchPopularMovies() async {
     Uri.parse('$baseUrl/movie/popular?language=en-US&page=1'),
     headers: {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns',
+          'Bearer Votre_API_code',
       'Accept': 'application/json',
     },
   );
@@ -126,7 +126,7 @@ Future<List<MovieModel>> fetchMoviesByGenre(int genreId) async {
     Uri.parse('$baseUrl/discover/movie?with_genres=$genreId&language=en-US'),
     headers: {
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns',
+          'Bearer Votre_API_code',
       'Accept': 'application/json',
     },
   );
@@ -151,7 +151,7 @@ Future<List<MovieModel>> fetchLikedMovies() async {
       Uri.parse('https://api.themoviedb.org/3/movie/$id?language=en-US'),
       headers: {
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns',
+            'Bearer Votre_API_code',
         'Accept': 'application/json',
       },
     );
@@ -183,7 +183,7 @@ Future<List<MovieModel>> fetchRecommendationsFromLikedMovies() async {
       ),
       headers: {
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns',
+            'Bearer Votre_API_code',
         'Accept': 'application/json',
       },
     );
@@ -211,7 +211,7 @@ Future<List<MovieModel>> fetchRecommendationsFromLikedMovies() async {
 
 Future<List<MovieModel>> fetchAllMovies({int maxPages = 10}) async {
   const bearerToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjZhN2M4MjcxZDU3N2JjNzdmMmU1ZDgwY2U0NjlkMCIsIm5iZiI6MTc0NDY3MTMxNS4yNDk5OTk4LCJzdWIiOiI2N2ZkOTI1MzYxYjFjNGJiMzI5OTRmNDciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fKG7SaYBn-FtJeMEuZJ6c8D4VjQxYvUJ9ngVxln0zns';
+      'Votre_API_code';
   const baseUrl = 'https://api.themoviedb.org/3/discover/movie';
   List<MovieModel> allMovies = [];
 
