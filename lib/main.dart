@@ -7,26 +7,52 @@ import 'package:recommandation_film/screens/home_screen.dart';
 import 'package:recommandation_film/screens/populaires.dart';
 import 'package:recommandation_film/screens/totufilms.dart';
 import 'package:recommandation_film/screens/toutgenres.dart';
+import 'package:recommandation_film/screens/login_screen.dart';
+import 'package:recommandation_film/screens/register_screen.dart';
 import 'package:recommandation_film/utile/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:recommandation_film/data/database_helper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialiser la base de données SQLite
+  final dbHelper = DatabaseHelper.instance;
+  await dbHelper.database;
+  
+  // Vérifier si l'utilisateur est connecté
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  final userEmail = prefs.getString('userEmail');
+  final username = prefs.getString('username');
+  
+  runApp(MyApp(isLoggedIn: isLoggedIn, userEmail: userEmail, username: username));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  final bool isLoggedIn;
+  final String? userEmail;
+  final String? username;
+
+  const MyApp({
+    super.key, 
+    this.isLoggedIn = false,
+    this.userEmail,
+    this.username,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Film Recommendation",
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: isLoggedIn ? HomeScreen(username: username) : const LoginScreen(),
       routes: {
-        '/home': (context) => HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => HomeScreen(username: username),
         '/films': (context) => FilmLoader(),
         '/populaire_films': (context) => PopularFilmLoader(),
         '/genres': (context) => GenrePageLoader(),

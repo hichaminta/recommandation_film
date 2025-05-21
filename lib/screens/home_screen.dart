@@ -5,9 +5,14 @@ import 'package:recommandation_film/widget_utilise/cardfilm.dart';
 import 'package:recommandation_film/widget_utilise/cardrecommend.dart';
 import 'package:recommandation_film/utile/colors.dart';
 import 'package:recommandation_film/widget_utilise/genrewifget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:recommandation_film/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  final String? username;
+  
+  const HomeScreen({super.key, this.username});
+  
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,15 +25,34 @@ class _HomeScreenState extends State<HomeScreen> {
     initialPage: 0,
     viewportFraction: 0.9,
   );
+  late TextEditingController _usernameController;
+  bool _isEditing = false;
 
   int currentPage = 0;
 
   @override
   void initState() {
     super.initState();
+    _usernameController = TextEditingController(text: widget.username);
     fetchMovies();
     fetchGenresList();
-    fetchRecommendedMovies(); // Récupérer les films recommandés ici
+    fetchRecommendedMovies();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _updateUsername() async {
+    if (_usernameController.text.isNotEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', _usernameController.text);
+      setState(() {
+        _isEditing = false;
+      });
+    }
   }
 
   Future<void> fetchMovies() async {
@@ -69,6 +93,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('userEmail');
+    await prefs.remove('username');
+    
+    if (mounted) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,22 +126,95 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "User",
-                          style: TextStyle(color: Colors.white, fontSize: 30),
-                        ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                "https://img.freepik.com/psd-gratuit/illustration-icone-contact-isolee_23-2151903337.jpg?t=st=1745014883~exp=1745018483~hmac=f658f856001c4b6da26c67ceb37f4f11d71f98221bcdd56a9f98b067a96e3998&w=900",
-                              ),
-                              fit: BoxFit.cover,
+                        if (!_isEditing)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isEditing = true;
+                              });
+                            },
+                            child: Text(
+                              widget.username ?? "User",
+                              style: TextStyle(color: Colors.white, fontSize: 30),
                             ),
+                          )
+                        else
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 150,
+                                child: TextField(
+                                  controller: _usernameController,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    hintText: "Nouveau nom",
+                                    hintStyle: TextStyle(color: Colors.white54),
+                                    border: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.check, color: Colors.white),
+                                onPressed: _updateUsername,
+                              ),
+                            ],
                           ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.logout, color: Colors.white),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    backgroundColor: appBackgroundColor,
+                                    title: Text(
+                                      'Déconnexion',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    content: Text(
+                                      'Voulez-vous vraiment vous déconnecter ?',
+                                      style: TextStyle(color: Colors.white70),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text(
+                                          'Annuler',
+                                          style: TextStyle(color: Colors.white70),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          _logout();
+                                        },
+                                        child: Text(
+                                          'Déconnecter',
+                                          style: TextStyle(color: appButtonColor),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    "https://img.freepik.com/psd-gratuit/illustration-icone-contact-isolee_23-2151903337.jpg?t=st=1745014883~exp=1745018483~hmac=f658f856001c4b6da26c67ceb37f4f11d71f98221bcdd56a9f98b067a96e3998&w=900",
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
