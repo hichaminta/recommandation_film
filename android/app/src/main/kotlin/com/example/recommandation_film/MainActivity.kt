@@ -5,14 +5,17 @@ import io.flutter.embedding.android.FlutterActivity
 import android.content.pm.PackageManager
 import android.os.Build
 import java.io.File
+import android.widget.Toast
 
 class MainActivity: FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         if (isDeviceRooted()) {
-            // Fermer l'application si le téléphone est rooté
-            finish()
+            Toast.makeText(this, "Votre téléphone est rooté. L'application va se fermer.", Toast.LENGTH_LONG).show()
+            window.decorView.postDelayed({
+                finish()
+            }, 2000)
         }
     }
 
