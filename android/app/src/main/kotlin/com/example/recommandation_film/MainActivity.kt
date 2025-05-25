@@ -11,6 +11,13 @@ class MainActivity: FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        // Vérifier la version d'Android (doit être la première vérification)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) { // S = 31 = Android 12
+            Toast.makeText(this, "Votre version d'Android est inférieure à 12. L'application peut ne pas fonctionner correctement.", Toast.LENGTH_LONG).show()
+            // Vous pouvez aussi fermer l'application ou désactiver certaines fonctionnalités ici
+            // finish()
+        }
+
         if (isDeviceRooted()) {
             Toast.makeText(this, "Votre téléphone est rooté. L'application va se fermer.", Toast.LENGTH_LONG).show()
             window.decorView.postDelayed({
